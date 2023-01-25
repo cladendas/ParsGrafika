@@ -79,37 +79,41 @@ void resp() {
     std::cout << "Для какого города (латиница)?\n";
     std::cin >> city;
 
+    if (city.find("-") != std::string::npos) {
+        city += "/";
+    }
+
     std::cout << "Что парсим? \n0 = Ссылка на список с TgStat\n1 = Список ссылок на каналы в TgStat\n";
     std::cin >> what;
-/*
-    if (what.find("tag") != std::string::npos) {
-        std::cout << "Ищу...\n";
-        request(url, resp);
-        findStrListChanTgStat(resp, city);
-    } else if (what.find("chanel") != std::string::npos) {
-        std::string tmp = "";
-        std::string list = "";
-        std::string exampleStr = "https://tgstat.ru/channel/@";
-        std::cout << "Введите список ссылок:\n";
 
-        while (true) {
-            std::cin >> tmp;
+//    if (what.find("tag") != std::string::npos) {
+//        std::cout << "Ищу...\n";
+//        request(url, resp);
+//        findStrListChanTgStat(resp, city);
+//    } else if (what.find("channel") != std::string::npos) {
+//        std::string tmp = "";
+//        std::string list = "";
+//        std::string exampleStr = "https://tgstat.ru/channel/@";
+//        std::cout << "Введите список ссылок:\n";
+//
+//        while (true) {
+//            std::cin >> tmp;
+//            if (tmp.find(exampleStr) == std::string::npos) {
+//                break;
+//            }
+//            urls.push_back(tmp);
+//        }
+//
+//        std::cout << "\nИщу...\n";
+//        for (std::string url : urls) {
+//            request(url, resp);
+//            findStrPathChanTgStat(resp, city);
+//        }
+//        std::cout << '\n';
+//    }
 
-            if (tmp.find(exampleStr) == std::string::npos) {
-                break;
-            }
 
-            urls.push_back(tmp);
-        }
 
-        std::cout << "\nИщу...\n";
-        for (std::string url : urls) {
-            request(url, resp);
-            findStrPathChanTgStat(resp, city);
-        }
-        std::cout << '\n';
-    }
-*/
     if (!what) {
         std::cout << "Введите ссылку:\n";
         std::cin >> url;
