@@ -1,4 +1,4 @@
 #pragma once
 #include "request.cpp"
 
-void request(std::string& url, std::string& resp);
+std::string request(std::string& url);

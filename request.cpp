@@ -2,7 +2,7 @@
 
 //запрос по url
 //результат запроса по указателю в resp
-void request(std::string& url, std::string& resp) {
+std::string request(std::string& url) {
     cpr::Response r = cpr::Get(cpr::Url(url));
-    resp = r.text;
+    return r.text;
 }
