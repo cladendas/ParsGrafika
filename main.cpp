@@ -4,8 +4,37 @@
 #include "requestH.h"
 #include "takeSubStrH.h"
 
+void writeFile(std::string city, std::string data) {
+    std::string path = city + ".txt";
+    std::ofstream file(path, std::ios::app);
+
+    file << data;
+
+    file.close();
+}
+
+void readFile() {
+    std::string path = "./param.txt";
+    std::string city = "";
+    std::string data = "";
+    //первая строка в файле относится к наименованию города
+    bool cityFlag = true;
+    std::ifstream file(path);
+
+    if (file.is_open()) {
+        while(!file.eof()) {
+            if (cityFlag) {
+                file >> city;
+                cityFlag = false;
+            }
+            file >> data;
+        }
+    }
+    file.close();
+}
+
 //парс по адресу канала TgStat
-void findStrPathChanTgStat(std::string& str, std::string city) {
+void findStrPathChanTgStat(std::string& str, const std::string city) {
     int indStart = 0;
     int indEnd = 0;
 
@@ -144,17 +173,6 @@ void resp() {
         std::cout << '\n';
     }
 
-
-
-	// std::ifstream file(path);
-	// if (file.is_open()) {
-	// 	while(!file.eof()) {
-	// 		std::string tmp = "";
-	// 		file >> tmp;
-	// 		urls.push_back(tmp);
-	// 	}
-	// }
-	// file.close();
 }
 
 int main() {
