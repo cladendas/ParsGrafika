@@ -1,14 +1,11 @@
-/*
- * Парс страницы и вывод результата
- */
-
 #include <regex>
 #include "pathGrafikaUTMshortPathH.h"
 
-void takeSubStr(int& indStart, int& indEnd,
+std::string takeSubStr(int& indStart, int& indEnd,
                 std::string city,
                 std::string& str, std::string& subStr, std::string& endSubStr, std::string& pathGrafika,
                 bool isInt, bool isChan) {
+    std::string data = "";
     std::regex reg("[\\s]+");
     str = std::regex_replace(str, reg, " ");
     //первый индекс тега, указывающего на нужное значение
@@ -26,17 +23,21 @@ void takeSubStr(int& indStart, int& indEnd,
                 std::regex reg("[\\s]+");
                 std::string tmpName = str.substr(indEnd, size);
                 std::string tmp = std::regex_replace(tmpName, reg, "");
-                //нужное значение
-                std::cout << tmp << '\t';
+                data = '\t' + tmp;
+//                std::cout << data << '\t';
             } else {
                 std::string tmpName = str.substr(indEnd, size); //нужное значение
-                std::cout << tmpName << '\t';
+                data = '\t' + tmpName;
+//                std::cout << data << '\t';
 
                 if (isChan) {
-                    buildPathGrafika(city, tmpName, pathGrafika);
-                    std::cout << '\t' + pathGrafika;
+                    std::string tmp = buildPathGrafika(city, tmpName);
+                    data = '\t' + tmp;
+//                    std::cout << data << '\t';
                 }
             }
         }
     }
+
+    return data;
 }

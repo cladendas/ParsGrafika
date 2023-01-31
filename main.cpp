@@ -4,17 +4,8 @@
 #include "requestH.h"
 #include "takeSubStrH.h"
 
-void writeFile(std::string city, std::string data) {
-    std::string path = city + ".txt";
-    std::ofstream file(path, std::ios::app);
-
-    file << data;
-
-    file.close();
-}
-
 //парс по адресу канала TgStat
-void findStrPathChanTgStat(std::string& str, const std::string city) {
+void findStrPathChanTgStat(std::string& str, std::string city) {
     int indStart = 0;
     int indEnd = 0;
 
@@ -27,17 +18,19 @@ void findStrPathChanTgStat(std::string& str, const std::string city) {
     std::string count = "<h2 class=\"mb-1 text-dark\">";
     std::string countEnd = "</h2>";
 
+    std::string data = "";
     std::string pathGrafika = "";
 
-    takeSubStr(indStart, indEnd, city, str, name, nameEnd, pathGrafika, false, false);
-    takeSubStr(indStart, indEnd, city, str, pathChan, pathChanEnd, pathGrafika, false, true);
-    takeSubStr(indStart, indEnd, city, str, count, countEnd, pathGrafika, true, false);
+    data += takeSubStr(indStart, indEnd, city, str, name, nameEnd, pathGrafika, false, false);
+    data += takeSubStr(indStart, indEnd, city, str, pathChan, pathChanEnd, pathGrafika, false, true);
+    data += takeSubStr(indStart, indEnd, city, str, count, countEnd, pathGrafika, true, false);
 
-//    std::cout << '\t' << pathGrafika;
+//    std::cout << data;
+    data = "";
     std::cout << '\n';
 }
 
-//парс списка каналов по одному адресу в TgStat
+//парс по ссылки на список в TgStat
 void findStrListChanTgStat(std::string& str, std::string city) {
     int howMany = 20;
 
@@ -55,27 +48,29 @@ void findStrListChanTgStat(std::string& str, std::string city) {
 
     std::string pathGrafika = "";
 
+    std::string data = "";
+
 	int indStart = 0;
 	int indEnd = 0;
 	int step = 0;
 	while (step < howMany) {
 
-        takeSubStr(indStart, indEnd, city, str, pathChan, pathChanEnd, pathGrafika, false, true);
-        takeSubStr(indStart, indEnd, city, str, name, nameEnd, pathGrafika, false, false);
-        takeSubStr(indStart, indEnd, city, str, count, countEnd, pathGrafika, true, false);
+        data += takeSubStr(indStart, indEnd, city, str, pathChan, pathChanEnd, pathGrafika, false, true);
+        data += takeSubStr(indStart, indEnd, city, str, name, nameEnd, pathGrafika, false, false);
+        data += takeSubStr(indStart, indEnd, city, str, count, countEnd, pathGrafika, true, false);
 
-        std::cout << '\t' << pathGrafika;
+//        std::cout << data;
+        data = "";
         std::cout << '\n';
 		step++;
 	}
 }
 
-void resp(const std::string city, const std::string path) {
+void resp() {
     std::string resp = "";
-//    std::string city = "ekaterinburg";
-    std::string tmpCity = "";
+    std::string city = "ekaterinburg";
     std::vector<std::string> urls;
-//    std::string path = "./urls.txt";
+    std::string path = "./urls.txt";
     bool what = false;
 //    std::string what = "";
 
@@ -87,14 +82,14 @@ void resp(const std::string city, const std::string path) {
 	std::string url = "https://tgstat.ru/tag/ekb-region";
 
     std::cout << "Для какого города (латиница)?\n";
-//    std::cin >> city;
+    std::cin >> city;
 
     if (city.find("-") != std::string::npos) {
-        tmpCity += "/";
+        city += "/";
     }
 
-//    std::cout << "Что парсим? \n0 = Ссылка на список с TgStat\n1 = Список ссылок на каналы в TgStat\n";
-//    std::cin >> what;
+    std::cout << "Что парсим? \n0 = Ссылка на список с TgStat\n1 = Список ссылок на каналы в TgStat\n";
+    std::cin >> what;
 
 //    if (what.find("tag") != std::string::npos) {
 //        std::cout << "Ищу...\n";
@@ -153,26 +148,18 @@ void resp(const std::string city, const std::string path) {
         }
         std::cout << '\n';
     }
-}
 
-void readFile() {
-    std::string path = "./param.txt";
-    std::string city = "";
-    std::string data = "";
-    //первая строка в файле относится к наименованию города
-    bool cityFlag = true;
-    std::ifstream file(path);
 
-    if (file.is_open()) {
-        while(!file.eof()) {
-            if (cityFlag) {
-                file >> city;
-                cityFlag = false;
-            }
-            file >> data;
-        }
-    }
-    file.close();
+
+	// std::ifstream file(path);
+	// if (file.is_open()) {
+	// 	while(!file.eof()) {
+	// 		std::string tmp = "";
+	// 		file >> tmp;
+	// 		urls.push_back(tmp);
+	// 	}
+	// }
+	// file.close();
 }
 
 int main() {
