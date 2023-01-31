@@ -18,17 +18,19 @@ void findStrPathChanTgStat(std::string& str, std::string city) {
     std::string count = "<h2 class=\"mb-1 text-dark\">";
     std::string countEnd = "</h2>";
 
+    std::string data = "";
     std::string pathGrafika = "";
 
-    takeSubStr(indStart, indEnd, city, str, name, nameEnd, pathGrafika, false, false);
-    takeSubStr(indStart, indEnd, city, str, pathChan, pathChanEnd, pathGrafika, false, true);
-    takeSubStr(indStart, indEnd, city, str, count, countEnd, pathGrafika, true, false);
+    data += takeSubStr(indStart, indEnd, city, str, name, nameEnd, pathGrafika, false, false);
+    data += takeSubStr(indStart, indEnd, city, str, pathChan, pathChanEnd, pathGrafika, false, true);
+    data += takeSubStr(indStart, indEnd, city, str, count, countEnd, pathGrafika, true, false);
 
-    std::cout << '\t' << pathGrafika;
+//    std::cout << data;
+    data = "";
     std::cout << '\n';
 }
 
-//парс списка каналов по одному адресу в TgStat
+//парс по ссылки на список в TgStat
 void findStrListChanTgStat(std::string& str, std::string city) {
     int howMany = 20;
 
@@ -46,16 +48,19 @@ void findStrListChanTgStat(std::string& str, std::string city) {
 
     std::string pathGrafika = "";
 
+    std::string data = "";
+
 	int indStart = 0;
 	int indEnd = 0;
 	int step = 0;
 	while (step < howMany) {
 
-        takeSubStr(indStart, indEnd, city, str, pathChan, pathChanEnd, pathGrafika, false, true);
-        takeSubStr(indStart, indEnd, city, str, name, nameEnd, pathGrafika, false, false);
-        takeSubStr(indStart, indEnd, city, str, count, countEnd, pathGrafika, true, false);
+        data += takeSubStr(indStart, indEnd, city, str, pathChan, pathChanEnd, pathGrafika, false, true);
+        data += takeSubStr(indStart, indEnd, city, str, name, nameEnd, pathGrafika, false, false);
+        data += takeSubStr(indStart, indEnd, city, str, count, countEnd, pathGrafika, true, false);
 
-        std::cout << '\t' << pathGrafika;
+//        std::cout << data;
+        data = "";
         std::cout << '\n';
 		step++;
 	}
