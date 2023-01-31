@@ -1,3 +1,7 @@
+/*
+ * Парс страницы и вывод результата
+ */
+
 #include <regex>
 #include "pathGrafikaUTMshortPathH.h"
 
@@ -25,11 +29,12 @@ void takeSubStr(int& indStart, int& indEnd,
                 //нужное значение
                 std::cout << tmp << '\t';
             } else {
-                std::string tmpName = str.substr(indEnd, size); //нужное знаение
+                std::string tmpName = str.substr(indEnd, size); //нужное значение
                 std::cout << tmpName << '\t';
 
                 if (isChan) {
                     buildPathGrafika(city, tmpName, pathGrafika);
+                    std::cout << '\t' + pathGrafika;
                 }
             }
         }

@@ -13,26 +13,6 @@ void writeFile(std::string city, std::string data) {
     file.close();
 }
 
-void readFile() {
-    std::string path = "./param.txt";
-    std::string city = "";
-    std::string data = "";
-    //первая строка в файле относится к наименованию города
-    bool cityFlag = true;
-    std::ifstream file(path);
-
-    if (file.is_open()) {
-        while(!file.eof()) {
-            if (cityFlag) {
-                file >> city;
-                cityFlag = false;
-            }
-            file >> data;
-        }
-    }
-    file.close();
-}
-
 //парс по адресу канала TgStat
 void findStrPathChanTgStat(std::string& str, const std::string city) {
     int indStart = 0;
@@ -53,7 +33,7 @@ void findStrPathChanTgStat(std::string& str, const std::string city) {
     takeSubStr(indStart, indEnd, city, str, pathChan, pathChanEnd, pathGrafika, false, true);
     takeSubStr(indStart, indEnd, city, str, count, countEnd, pathGrafika, true, false);
 
-    std::cout << '\t' << pathGrafika;
+//    std::cout << '\t' << pathGrafika;
     std::cout << '\n';
 }
 
@@ -90,11 +70,12 @@ void findStrListChanTgStat(std::string& str, std::string city) {
 	}
 }
 
-void resp() {
+void resp(const std::string city, const std::string path) {
     std::string resp = "";
-    std::string city = "ekaterinburg";
+//    std::string city = "ekaterinburg";
+    std::string tmpCity = "";
     std::vector<std::string> urls;
-    std::string path = "./urls.txt";
+//    std::string path = "./urls.txt";
     bool what = false;
 //    std::string what = "";
 
@@ -106,14 +87,14 @@ void resp() {
 	std::string url = "https://tgstat.ru/tag/ekb-region";
 
     std::cout << "Для какого города (латиница)?\n";
-    std::cin >> city;
+//    std::cin >> city;
 
     if (city.find("-") != std::string::npos) {
-        city += "/";
+        tmpCity += "/";
     }
 
-    std::cout << "Что парсим? \n0 = Ссылка на список с TgStat\n1 = Список ссылок на каналы в TgStat\n";
-    std::cin >> what;
+//    std::cout << "Что парсим? \n0 = Ссылка на список с TgStat\n1 = Список ссылок на каналы в TgStat\n";
+//    std::cin >> what;
 
 //    if (what.find("tag") != std::string::npos) {
 //        std::cout << "Ищу...\n";
@@ -172,7 +153,26 @@ void resp() {
         }
         std::cout << '\n';
     }
+}
 
+void readFile() {
+    std::string path = "./param.txt";
+    std::string city = "";
+    std::string data = "";
+    //первая строка в файле относится к наименованию города
+    bool cityFlag = true;
+    std::ifstream file(path);
+
+    if (file.is_open()) {
+        while(!file.eof()) {
+            if (cityFlag) {
+                file >> city;
+                cityFlag = false;
+            }
+            file >> data;
+        }
+    }
+    file.close();
 }
 
 int main() {
