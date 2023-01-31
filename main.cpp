@@ -3,12 +3,21 @@
 #include <fstream>
 #include "requestH.h"
 #include "takeSubStrH.h"
+#include "TgStatObjectH.h"
+#include "pathGrafikaUTMshortPathH.h"
 
-void writeFile(std::string city, std::string data) {
+void writeFile(std::string city, TgStatObject tgStat) {
     std::string path = "../" + city + ".txt";
     std::ofstream file(path, std::ios::app);
 
-    file << data;
+    file << tgStat.name;
+    file << '\t';
+    file << tgStat.channel;
+    file << '\t';
+    file << tgStat.count;
+    file << '\t';
+    file << tgStat.path;
+    file << '\n';
 
     file.close();
 }
@@ -17,6 +26,7 @@ void writeFile(std::string city, std::string data) {
 void findStrPathChanTgStat(std::string& str, std::string city) {
     int indStart = 0;
     int indEnd = 0;
+    TgStatObject tgStat;
 
     std::string name = "<title>Telegram-канал \"";
     std::string nameEnd = "\" — ";
@@ -27,21 +37,17 @@ void findStrPathChanTgStat(std::string& str, std::string city) {
     std::string count = "<h2 class=\"mb-1 text-dark\">";
     std::string countEnd = "</h2>";
 
-    std::string data = "";
-    std::string pathGrafika = "";
-
-    data += takeSubStr(indStart, indEnd, city, str, name, nameEnd, pathGrafika, false, false);
-    data += takeSubStr(indStart, indEnd, city, str, pathChan, pathChanEnd, pathGrafika, false, true);
-    data += takeSubStr(indStart, indEnd, city, str, count, countEnd, pathGrafika, true, false);
-
-    data += '\n';
-    writeFile(city, data);
-    data = "";
+    tgStat.name = takeSubStr(indStart, indEnd, city, str, name, nameEnd, false);
+    tgStat.channel = takeSubStr(indStart, indEnd, city, str, pathChan, pathChanEnd, false);
+    tgStat.count = takeSubStr(indStart, indEnd, city, str, count, countEnd, true);
+    tgStat.path = buildPathGrafika(city, tgStat.channel);
+    writeFile(city, tgStat);
 }
 
 //парс по ссылки на список в TgStat
 void findStrListChanTgStat(std::string& str, std::string city) {
     int howMany = 10;
+    TgStatObject tgStat;
 
 	//строка с именем канала
 	std::string name = "<div class=\"font-16 text-dark text-truncate\">";
@@ -55,21 +61,17 @@ void findStrListChanTgStat(std::string& str, std::string city) {
 	std::string count = "<div class=\"font-12 text-truncate\"> <b>";
 	std::string countEnd = "</b>";
 
-    std::string pathGrafika = "";
-    std::string data = "";
-
 	int indStart = 0;
 	int indEnd = 0;
 	int step = 0;
 	while (step < howMany) {
 
-        data += takeSubStr(indStart, indEnd, city, str, pathChan, pathChanEnd, pathGrafika, false, true);
-        data += takeSubStr(indStart, indEnd, city, str, name, nameEnd, pathGrafika, false, false);
-        data += takeSubStr(indStart, indEnd, city, str, count, countEnd, pathGrafika, true, false);
+        tgStat.channel = takeSubStr(indStart, indEnd, city, str, pathChan, pathChanEnd, false);
+        tgStat.name = takeSubStr(indStart, indEnd, city, str, name, nameEnd, false);
+        tgStat.count = takeSubStr(indStart, indEnd, city, str, count, countEnd, true);
+        tgStat.path = buildPathGrafika(city, tgStat.channel);
 
-        data += '\n';
-        writeFile(city, data);
-        data = "";
+        writeFile(city, tgStat);
 		step++;
 	}
 }

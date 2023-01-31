@@ -3,8 +3,7 @@
 
 std::string takeSubStr(int& indStart, int& indEnd,
                 std::string city,
-                std::string& str, std::string& subStr, std::string& endSubStr, std::string& pathGrafika,
-                bool isInt, bool isChan) {
+                std::string& str, std::string& subStr, std::string& endSubStr, bool isInt) {
     std::string data = "";
     std::regex reg("[\\s]+");
     str = std::regex_replace(str, reg, " ");
@@ -24,17 +23,9 @@ std::string takeSubStr(int& indStart, int& indEnd,
                 std::string tmpName = str.substr(indEnd, size);
                 std::string tmp = std::regex_replace(tmpName, reg, "");
                 data = '\t' + tmp;
-//                std::cout << data << '\t';
             } else {
                 std::string tmpName = str.substr(indEnd, size); //нужное значение
                 data = '\t' + tmpName;
-//                std::cout << data << '\t';
-
-                if (isChan) {
-                    std::string tmp = buildPathGrafika(city, tmpName);
-                    data = '\t' + tmp;
-//                    std::cout << data << '\t';
-                }
             }
         }
     }
