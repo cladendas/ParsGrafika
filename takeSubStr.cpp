@@ -22,10 +22,10 @@ std::string takeSubStr(int& indStart, int& indEnd,
                 std::regex reg("[\\s]+");
                 std::string tmpName = str.substr(indEnd, size);
                 std::string tmp = std::regex_replace(tmpName, reg, "");
-                data = '\t' + tmp;
+                data = tmp;
             } else {
                 std::string tmpName = str.substr(indEnd, size); //нужное значение
-                data = '\t' + tmpName;
+                data = tmpName;
             }
         }
     }

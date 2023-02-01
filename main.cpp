@@ -46,7 +46,7 @@ void findStrPathChanTgStat(std::string& str, std::string city) {
 
 //парс по ссылки на список в TgStat
 void findStrListChanTgStat(std::string& str, std::string city) {
-    int howMany = 10;
+    int howMany = 15;
     TgStatObject tgStat;
 
 	//строка с именем канала
