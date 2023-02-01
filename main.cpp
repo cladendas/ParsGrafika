@@ -7,7 +7,7 @@
 #include "pathGrafikaUTMshortPathH.h"
 
 void writeFile(std::string city, TgStatObject tgStat) {
-    std::string path = "../" + city + ".txt";
+    std::string path = "./" + city + ".txt";
     std::ofstream file(path, std::ios::app);
 
     file << tgStat.name;
@@ -91,15 +91,14 @@ void resp(std::string city, std::string url) {
         resp = request(url);
         findStrListChanTgStat(resp, city);
     } else if (url.find(".ru/channel") != std::string::npos) {
-        std::cout << "\nИщу 2...\n";
+        std::cout << "Ищу 2...\n";
         resp = request(url);
         findStrPathChanTgStat(resp, city);
-        std::cout << '\n';
     }
 }
 
 void readFile() {
-    std::string path = "../param.txt";
+    std::string path = "./param.txt";
     std::string city = "";
     std::string data = "";
     //первая строка в файле относится к наименованию города
@@ -107,6 +106,7 @@ void readFile() {
     std::ifstream file1(path);
 
     if (file1.is_open()) {
+        std::cout << "File is open!\n";
         while(!file1.eof()) {
             if (cityFlag) {
                 file1 >> city;
