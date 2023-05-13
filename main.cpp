@@ -1,6 +1,5 @@
 #include <iostream>
 #include <vector>
-#include <fstream>
 #include "requestH.h"
 #include "takeSubStrH.h"
 #include "TgStatObjectH.h"
@@ -76,22 +75,22 @@ void findStrListChanTgStat(std::string& str, std::string city) {
 	}
 }
 
-void resp(std::string city, std::string url) {
-    std::string resp = "";
-    std::string tmpCity = "";
+void resp(const std::string city, std::string url) {
+    std::string resp;
+    std::string tmpCity;
     std::vector<std::string> urls;
-    bool what = false;
+//    bool what = false;
 
-    if (city.find("-") != std::string::npos) {
+    if (city.find('-') != std::string::npos) {
         tmpCity += "/";
     }
 
     if (url.find(".ru/tag") != std::string::npos) {
-        std::cout << "Ищу 1...\n";
+        std::cout << "Ищу по ссылке на канал...\n";
         resp = request(url);
         findStrListChanTgStat(resp, city);
     } else if (url.find(".ru/channel") != std::string::npos) {
-        std::cout << "Ищу 2...\n";
+        std::cout << "Ищу по подборке...\n";
         resp = request(url);
         findStrPathChanTgStat(resp, city);
     }
@@ -99,8 +98,8 @@ void resp(std::string city, std::string url) {
 
 void readFile() {
     std::string path = "./param.txt";
-    std::string city = "";
-    std::string data = "";
+    std::string city;
+    std::string data;
     //первая строка в файле относится к наименованию города
     bool cityFlag = true;
     std::ifstream file1(path);

@@ -1,4 +1,4 @@
 #pragma once
-#include "TgStatObject.cpp"
+#include "tgStatObject.cpp"
 
 struct TgStatObject;
